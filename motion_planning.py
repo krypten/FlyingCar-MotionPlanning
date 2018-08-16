@@ -7,6 +7,7 @@ import numpy as np
 import utm
 
 from planning_utils import a_star, heuristic, create_grid, prune_path, csv_first_row
+from rrt_planning import path_planing_bi_rrt
 from udacidrone import Drone
 from udacidrone.connection import MavlinkConnection
 from udacidrone.messaging import MsgID
@@ -142,7 +143,7 @@ class MotionPlanning(Drone):
         print("North offset = {0}, east offset = {1}".format(north_offset, east_offset))
         # Define starting point on the grid (this is just grid center)
         grid_start = (-north_offset, -east_offset)
-        # TODO: convert start position to current position rather than map center
+        # DONE: convert start position to current position rather than map center
         grid_start = (int(current_position[0] - north_offset), int(current_position[1] - east_offset)) # Local position 
         
         # Set goal as some arbitrary position on the grid
@@ -160,7 +161,14 @@ class MotionPlanning(Drone):
         # DONE: add diagonal motions with a cost of sqrt(2) to your A* implementation
         # or move to a different search space such as a graph (not done here)
         print('Local Start and Goal: ', grid_start, grid_goal)
+        
+        
+        # Approach 1: A-star algorithm
         path, _ = a_star(grid, heuristic, grid_start, grid_goal)
+        # Approach 2: Potential based Bi-RRT* algorithm (very slow)
+        # path = path_planing_bi_rrt(grid, grid_start, grid_goal)
+        
+        
         # DONE: prune path to minimize number of waypoints
         print('Length of path ' + str(len(path)))
         path = prune_path(path)

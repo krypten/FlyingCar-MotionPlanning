@@ -21,11 +21,17 @@ I have hardcorded goal location at far place behind building then converted the 
 ![Goal position](./images/goal_position.png)
 
 #### 5. Path Search algorithm
-##### A-star
+##### Approach 1: A-star 
 Added diagonal motion as NORTH_WEST, NORTH_EAST, SOUTH_WEST and SOUTH_EAST to A* implementation with a cost of sqrt(2) in planning_utils.py .
 
 ![A* Path](./images/path_1.png)
 ![A* Path](./images/path_2.png)
+
+##### ~~Approach 2: Potential based Bidirectionalized RRT*~~
+~~The implementation this algorithm is in rrt_planning.py file. In this method, we map the optimal path by generating Rapidly-exploring Random Tree from both start position and goal position. This approach is based on the below mentioned papers. Also, you can find a PBRTT.ipynb ipython notebook containing the graphs of RRT, RRT* and BiRRT* for your reference.~~
+1. https://arxiv.org/pdf/1703.08944.pdf
+2. https://arxiv.org/pdf/1807.08325.pdf
+
 
 #### 6. Cull waypoints
 In this step, collinearity check is used to prune the path. This removes unnecessary waypoints from the path.
